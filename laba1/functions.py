@@ -3,11 +3,12 @@ import constants
 
 def get_text():
     text = input()
+    text = text.replace("...", ".")
 
-    for i in constants.chars_to_replace:
+    for i in constants.CHARS_TO_REPLACE:
         text = text.replace(i, " ")
 
-    text = text.replace(constants.mr, "Mr ").replace(constants.miss, "Miss ").replace(constants.ms, "Ms ")
+    text = text.replace(constants.MR, "Mr ").replace(constants.MISS, "Miss ").replace(constants.MS, "Ms ")
 
     return text
 
@@ -22,7 +23,7 @@ def get_average_words(text):
 
     average /= len(text)
 
-    print(f"Average words in sentence : {int(average)}")
+    return average
 
 
 def get_median_words(text):
@@ -34,7 +35,7 @@ def get_median_words(text):
 
     text.sort()
 
-    print(f"Median words in sentence : {text[int(len(text) / 2)]}")
+    return text[int(len(text) / 2)]
 
 
 def replace_end_sentence(text):
@@ -57,7 +58,7 @@ def get_word_repetition(text):
         else:
             words[i] = 1
 
-    print(f"Word repetitions : \n {words}")
+    return words
 
 
 def str_to_bool(text):
@@ -84,4 +85,4 @@ def get_ngram(text):
         else:
             ngrams[text[start:end]] = 1
 
-    print(f"Ngrams:\n{ngrams}")
+    return ngrams
