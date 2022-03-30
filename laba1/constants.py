@@ -1,8 +1,8 @@
 K = 10
 N = 4
 
-MR = "Mr."
-MISS = "Miss."
-MS = "Ms."
+mr = "Mr."
+miss = "Miss."
+ms = "Ms."
 
-CHARS_TO_REPLACE = "\\&@:;/*+-1234567890/|#$%()=_"
+chars_to_replace = "\\&@:;/*+-1234567890/|#$%()=_"
