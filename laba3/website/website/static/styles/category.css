@@ -498,6 +498,7 @@ section
 .user
 {
 	margin-right: 28px;
+	width: 40px;
 }
 .user a > div
 {
@@ -823,6 +824,10 @@ section
 .product_dropdown_sorting
 {
 	margin-right: 59px;
+}
+.user_dropdown_sorting
+{
+	margin-right: 0px;
 }
 .isotope_filter_text span,
 .isotope_sorting_text span
