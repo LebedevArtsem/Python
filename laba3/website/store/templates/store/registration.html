@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/my.css' %}">
+<link rel="stylesheet" href="{% static 'styles/registrate/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="home">
+    <form class="form" method="post">
+        {% csrf_token %}
+        <input checked="" id="signin" name="action" type="radio" value="signin">
+        <label for="signin">Sign in</label>
+        <input id="signup" name="action" type="radio" value="signup">
+        <label for="signup">Sign up</label>
+        <div id="wrapper">
+            <div id="arrow"></div>
+            <input id="email" placeholder="Name" type="text">
+            <input id="pass" placeholder="Password" type="password">
+            <input id="repass" placeholder="Repeat password" type="password">
+        </div>
+        <button type="submit">
+            <span>
+              Sign in
+              <br>
+              Sign up
+            </span>
+        </button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript"></script>
+{% endblock %}
