@@ -20,19 +20,7 @@
     <form class="form" method="post">
         {% csrf_token %}
         <div id="wrapper">
-            <div class="form-group">
-                <input type="text" placeholder="Name">
-
-                <div class="invalid-feedback">
-                    {{form.name.errors}}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form.password }}
-                <div class="invalid-feedback">
-                    {{form.password.errors}}
-                </div>
-            </div>
+            {{form.as_p}}
         </div>
         <button type="submit">Sign in</button>
     </form>

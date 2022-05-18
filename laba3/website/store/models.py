@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -11,6 +12,12 @@ class Product(models.Model):
     category = models.ForeignKey(
         'Category',
         on_delete=models.PROTECT,
+        null=True
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        blank=True,
         null=True
     )
 
