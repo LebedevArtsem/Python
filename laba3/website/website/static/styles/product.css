@@ -499,6 +499,7 @@ section
 .user
 {
 	margin-right: 28px;
+	width: 40px;
 }
 .user a > div
 {
@@ -1474,4 +1475,27 @@ section
 	font-size: 16px;
 	color: #969696;
 	font-weight: 300;
+}
+.products_dropdown
+{
+	cursor: pointer;
+}
+.product_dropdown_filter
+{
+	width: 114px;
+}
+.product_dropdown_sorting
+{
+	margin-right: 59px;
+}
+.user_dropdown_sorting
+{
+	margin-right: 0px;
+}
+.isotope_filter_text span,
+.isotope_sorting_text span
+{
+	font-size: 16px;
+	font-weight: 400;
+	color: #969696;
 }

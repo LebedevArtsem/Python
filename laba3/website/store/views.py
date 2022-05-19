@@ -1,6 +1,8 @@
+from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from .models import Product
+from .models import Product, Cart
 from .forms import SignUpForm, SignInForm
 from django.contrib.auth import login, logout
 
@@ -41,3 +43,27 @@ def sign_out(request):
 def category(request):
     products = Product.objects.all()
     return render(request, 'store/category.html', {'products': products})
+
+
+def get_product(request, product_id):
+    item = Product.objects.get(pk=product_id)
+    return render(request, 'store/product.html', {'item': item})
+
+
+def cart(request):
+    current_user = request.user
+    products_cart = Cart.objects.filter(user_id=current_user.pk).values_list('product', flat=True)
+    products = Product.objects.filter(pk__in=products_cart)
+    return render(request, 'store/cart.html', {'products': products})
+
+
+def add_to_cart(request, product_id):
+    current_user = request.user
+    Cart.objects.create(product_id=product_id, user_id=current_user.pk)
+    return redirect('cart')
+
+
+def clean_cart(request):
+    current_user = request.user
+    Cart.objects.filter(user_id=current_user.pk).delete()
+    return redirect('cart')

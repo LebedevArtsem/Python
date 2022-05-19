@@ -7,7 +7,7 @@ html, body { margin: 0; }
 ::-ms-input-placeholder { color: #DEDFDF; }
 
 body {
-  background: #CCC;
+  background: #ccc;
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }

@@ -1,0 +1,25 @@
+{% load static %}
+{% load get_range %}
+<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-end justify-content-start">
+    <div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start mr-auto">
+        <div>
+            <div class="product_number">{{ i }}</div>
+        </div>
+        <div>
+            <div class="product_image"><img src="{{ item.image.url }}" alt=""></div>
+        </div>
+        <div class="product_name_container">
+            <div class="product_name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></div>
+        </div>
+    </div>
+    <div class="product_size product_text"><span>Size: </span>{{ item.size }}</div>
+    <div class="product_price product_text"><span>Price: </span>${{ item.price }}</div>
+    <div class="product_quantity_container">
+        <div class="product_quantity ml-lg-auto mr-lg-auto text-center">
+            <span class="product_text product_num">1</span>
+            <div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
+            <div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
+        </div>
+    </div>
+    <div class="product_total product_text"><span>Total: </span>$3.99</div>
+</li>

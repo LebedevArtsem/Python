@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Product(models.Model):
@@ -14,15 +15,15 @@ class Product(models.Model):
         on_delete=models.PROTECT,
         null=True
     )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True
-    )
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'product_id': self.pk})
+
+    def get_add_to_cart_url(self):
+        return reverse('add_to_cart', kwargs={'product_id': self.pk})
 
     class Meta:
         verbose_name = "Продукт"
@@ -38,3 +39,23 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+
+
+class Cart(models.Model):
+    product = models.ForeignKey(
+        'Product',
+        on_delete=models.PROTECT,
+        null=True
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        null=True
+    )
+
+    def __str__(self):
+        return "cart"
+
+    class Meta:
+        verbose_name = "Корзина"
+        verbose_name_plural = "Корзина"

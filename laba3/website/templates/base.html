@@ -53,11 +53,18 @@
                     </ul>
                 </div>
 
-
                 <!-- Cart -->
-                <div class="cart"><a href="cart.html">
-                    <div><img class="svg" src="{% static 'images/cart.svg' %}" alt=""></div>
-                </a></div>
+                <div class="cart">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'cart' %}">
+                        <div><img class="svg" src="{% static 'images/cart.svg' %}" alt=""></div>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}">
+                        <div><img class="svg" src="{% static 'images/cart.svg' %}" alt=""></div>
+                    </a>
+                    {% endif %}
+                </div>
                 <!-- Phone -->
                 <div class="header_phone d-flex flex-row align-items-center justify-content-start">
                     <div>
