@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 async def index(request):
-    await logger.debug(request)
+    logger.debug(request)
     products = await sync_to_async(list)(Product.objects.all())
     return render(request, 'store/index.html', {'products': products})
 
