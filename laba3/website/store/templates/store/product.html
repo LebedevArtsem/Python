@@ -22,8 +22,8 @@
             <div class="home_title">Product Page</div>
             <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                 <ul class="d-flex flex-row align-items-start justify-content-start text-center">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="{% url 'category' %}">Woman</a></li>
+                    <li><a href="{% url 'store' %}">Home</a></li>
+                    <li><a href="{{ category.get_absolute_url }}">{{ item.category }}</a></li>
 
                 </ul>
             </div>

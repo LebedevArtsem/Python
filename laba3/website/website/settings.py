@@ -131,7 +131,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': './logs/logging.log',
-            'formatter': 'simple',
+            'formatter': 'verbose',
             #'include_html': True,
         }
     },
@@ -142,3 +142,5 @@ LOGGING = {
         }
     },
 }
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"

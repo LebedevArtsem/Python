@@ -11,7 +11,7 @@
             <div>
                 <div>
                     <div class="product_name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></div>
-                    <div class="product_category">In <a href="{% url 'product' item.pk %}">Category</a></div>
+                    <div class="product_category">In <a href="{{ item.get_absolute_url }}">Category</a></div>
                 </div>
             </div>
             <div class="ml-auto text-right">
