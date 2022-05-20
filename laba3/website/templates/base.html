@@ -30,9 +30,9 @@
 
             <nav class="main_nav">
                 <ul class="d-flex flex-row align-items-start justify-content-start">
-                    <li class="active"><a href="{% url 'category' %}">Women</a></li>
-                    <li><a href="#">Men</a></li>
-                    <li><a href="#">Kids</a></li>
+                    <li><a href="{% url 'category' category_id=1 %}">Women</a></li>
+                    <li><a href="{% url 'category' category_id=2 %}">Men</a></li>
+                    <li><a href="{% url 'category' category_id=3 %}">Kids</a></li>
                 </ul>
             </nav>
 

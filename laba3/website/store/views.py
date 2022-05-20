@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .models import Product, Cart
+from .models import Product, Cart, Category
 from .forms import SignUpForm, SignInForm
 from django.contrib.auth import login, logout
 import logging
@@ -48,13 +48,14 @@ def sign_out(request):
     return redirect('store')
 
 
-def category(request):
-    products = Product.objects.all()
+def category(request, category_id):
+    products = Product.objects.filter(category_id=category_id)
     logger.debug(request)
     paginator = Paginator(products, 9)
     page_num = request.GET.get('page', 1)
     products_obj = paginator.get_page(page_num)
-    return render(request, 'store/category.html', {'products': products_obj})
+    cat = Category.objects.get(pk=category_id)
+    return render(request, 'store/category.html', {'products': products_obj, 'category': cat})
 
 
 def get_product(request, product_id):
