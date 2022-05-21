@@ -23,7 +23,7 @@ async def sign_up(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            asyncio.run(form.save())
+            form.save()
             return redirect('login')
     else:
         form = SignUpForm()

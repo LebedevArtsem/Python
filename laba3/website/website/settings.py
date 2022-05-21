@@ -63,11 +63,11 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Store',
-        'USER': 'postgres',
-        'PASSWORD': '568710',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': os.environ.get('postgres', 'Store'),
+        'USER': os.environ.get('postgres', 'postgres'),
+        'PASSWORD': os.environ.get('postgres', '568710'),
+        'HOST': os.environ.get('db', 'localhost'),
+        'PORT': os.environ.get('15432', '5432')
     }
 }
 
@@ -132,7 +132,7 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': './logs/logging.log',
             'formatter': 'verbose',
-            #'include_html': True,
+            # 'include_html': True,
         }
     },
     'loggers': {
