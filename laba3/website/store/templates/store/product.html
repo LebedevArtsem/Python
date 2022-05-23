@@ -23,7 +23,7 @@
             <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                 <ul class="d-flex flex-row align-items-start justify-content-start text-center">
                     <li><a href="{% url 'store' %}">Home</a></li>
-                    <li><a href="{{ category.get_absolute_url }}">{{ item.category }}</a></li>
+                    <li><a href="{{ category.get_category_url }}">{{ item.category }}</a></li>
 
                 </ul>
             </div>
@@ -46,7 +46,7 @@
             <div class="col-lg-6 product_col">
                 <div class="product_info">
                     <div class="product_name">{{ item.title }}</div>
-                    <div class="product_category">In <a href="category.html">Category</a></div>
+                    <div class="product_category">In category</div>
                     <div class="product_rating_container d-flex flex-row align-items-center justify-content-start">
                         <div class="rating_r rating_r_4 home_item_rating">
 
