@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import reverse,reverse_lazy
 
 
 class Product(models.Model):
@@ -20,10 +20,10 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product', kwargs={'product_id': self.pk})
+        return reverse_lazy('product', kwargs={'product_id': self.pk})
 
     def get_add_to_cart_url(self):
-        return reverse('add_to_cart', kwargs={'product_id': self.pk})
+        return reverse_lazy('add_to_cart', kwargs={'product_id': self.pk})
 
     class Meta:
         verbose_name = "Продукт"

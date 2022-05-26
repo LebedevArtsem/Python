@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load get_range %}
 
 {% block links %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap/bootstrap.min.css' %}">
@@ -23,8 +23,7 @@
             <div class="breadcrumbs d-flex flex-column align-items-center justify-content-center">
                 <ul class="d-flex flex-row align-items-start justify-content-start text-center">
                     <li><a href="{% url 'store' %}">Home</a></li>
-                    <li><a href="{{ category.get_category_url }}">{{ item.category }}</a></li>
-
+                    <li><a href="{{ item.category.get_category_url }}">{{ item.category }}</a></li>
                 </ul>
             </div>
         </div>
@@ -49,7 +48,9 @@
                     <div class="product_category">In category</div>
                     <div class="product_rating_container d-flex flex-row align-items-center justify-content-start">
                         <div class="rating_r rating_r_4 home_item_rating">
-
+                            {% for i in 0|get_range:item.rate %}
+                            <i></i>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="product_price">${{ item.price }}</div>
@@ -103,9 +104,15 @@
                             <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                                 <div>
                                     <div>
+                                        {% if request.user.is_authenticated %}
                                         <a href="{{ item.get_add_to_cart_url }}">
                                             <img src="{% static 'images/cart.svg' %}" class="svg" alt="">
                                         </a>
+                                        {% else %}
+                                        <a href="{% url 'login' %}">
+                                            <img src="{% static 'images/cart.svg' %}" class="svg" alt="">
+                                        </a>
+                                        {% endif %}
                                         <div>+</div>
                                     </div>
                                 </div>

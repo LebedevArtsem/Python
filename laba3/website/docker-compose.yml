@@ -48,7 +48,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres_db
-      - POSTGRES_PORT=54329
+      - POSTGRES_PORT=5432
     depends_on:
       - postgres_db
       - web

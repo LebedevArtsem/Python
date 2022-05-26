@@ -34,9 +34,17 @@
                 </div>
                 <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                     <div>
-                        <div><a href="{{ item.get_add_to_cart_url }}"><img src="{% static 'images/cart.svg' %}" class="svg" alt=""></a>
+                        {% if request.user.is_authenticated %}
+                        <div><a href="{{ item.get_add_to_cart_url }}"><img src="{% static 'images/cart.svg' %}"
+                                                                           class="svg" alt=""></a>
                             <div>+</div>
                         </div>
+                        {% else %}
+                        <div><a href="{% url 'login' %}"><img src="{% static 'images/cart.svg' %}" class="svg"
+                                                              alt=""></a>
+                            <div>+</div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
