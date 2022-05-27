@@ -20,3 +20,21 @@ class SignUpForm(UserCreationForm):
 class SignInForm(AuthenticationForm):
     username = forms.CharField(label='Name', widget=forms.TextInput())
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
+
+
+class CheckoutForm(forms.ModelForm):
+    firstname = forms.CharField(label='First name', widget=forms.TextInput(attrs={'class': 'checkout_input'}))
+    lastname = forms.CharField(label='Last name', widget=forms.TextInput(attrs={'class': 'checkout_input'}))
+    address = forms.CharField(label="Address", widget=forms.TextInput(attrs={'class': 'checkout_input'}))
+    phone = forms.CharField(label='Phone No', widget=forms.TextInput(attrs={'class': 'checkout_input'}))
+    email = forms.CharField(label='Email', widget=forms.TextInput(attrs={'class': 'checkout_input'}))
+
+    class Meta:
+        model = User
+        fields = [
+            'firstname',
+            'lastname',
+            'address',
+            'phone',
+            'email',
+        ]

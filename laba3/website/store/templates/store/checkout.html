@@ -41,35 +41,37 @@
                     <div class="checkout_title">Billing</div>
                     <div class="checkout_form_container">
 
-                        <form action="#" id="checkout_form" class="checkout_form" method="post">
+                        <form id="checkout_form" class="checkout_form" method="post">
                             {% csrf_token %}
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <!-- Name -->
-                                    <input type="text" id="checkout_name" class="checkout_input"
-                                           placeholder="First Name" required="required">
+                                    <label for="{{ form.firstname.id_for_label }}">First name</label>
+                                    {{ form.firstname }}
                                 </div>
                                 <div class="col-lg-6">
                                     <!-- Last Name -->
-                                    <input type="text" id="checkout_last_name" class="checkout_input"
-                                           placeholder="Last Name" required="required">
+                                    <label for="{{ form.lastname.id_for_label }}">Last name</label>
+                                    {{ form.lastname }}
                                 </div>
                             </div>
                             <div>
                                 <!-- Address -->
-                                <input type="text" id="checkout_address" class="checkout_input"
-                                       placeholder="Address" required="required">
+                                <label for="{{ form.address.id_for_label }}">Address</label>
+                                {{ form.address }}
                             </div>
                             <div>
                                 <!-- Phone no -->
-                                <input type="phone" id="checkout_phone" class="checkout_input" placeholder="Phone"
-                                       required="required">
+                                <label for="{{ form.phone.id_for_label }}">Phone</label>
+                                {{ form.phone }}
                             </div>
                             <div>
                                 <!-- Email -->
-                                <input type="phone" id="checkout_email" class="checkout_input" placeholder="Email"
-                                       required="required">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}
                             </div>
+                            <button type="submit" class="checkout_button">Confirm</button>
                         </form>
                     </div>
                 </div>
@@ -91,27 +93,6 @@
                                 <div class="cart_extra_total_value ml-auto">$29.90</div>
                             </li>
                         </ul>
-                        <div class="payment_options">
-                            <div class="checkout_title">Payment</div>
-                            <ul>
-                                <li class="shipping_option d-flex flex-row align-items-center justify-content-start">
-                                    <label class="radio_container">
-                                        <input type="radio" id="radio_2" name="payment_radio" class="payment_radio">
-                                        <span class="radio_mark"></span>
-                                        <span class="radio_text">Cash on Delivery</span>
-                                    </label>
-                                </li>
-                                <li class="shipping_option d-flex flex-row align-items-center justify-content-start">
-                                    <label class="radio_container">
-                                        <input type="radio" id="radio_3" name="payment_radio" class="payment_radio"
-                                               checked>
-                                        <span class="radio_mark"></span>
-                                        <span class="radio_text">Credit Card</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="checkout_button trans_200"><a href="checkout.html">place order</a></div>
                     </div>
                 </div>
             </div>

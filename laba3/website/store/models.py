@@ -1,13 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse,reverse_lazy
+from django.urls import reverse, reverse_lazy
+from django.contrib.postgres.fields import ArrayField
 
 
 class Product(models.Model):
     title = models.CharField(max_length=40, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
     price = models.FloatField(verbose_name='Цена')
-    size = models.CharField(max_length=3, verbose_name='Размер')
+    size = ArrayField(
+        models.CharField(max_length=4, blank=True, null=True, verbose_name='Размер'),
+        blank=True,
+        null=True,
+        size=5,
+    )
     image = models.ImageField(upload_to='images', verbose_name='Изображение')
     rate = models.IntegerField(verbose_name='Рейтинг')
     category = models.ForeignKey(
@@ -55,6 +61,8 @@ class Cart(models.Model):
         on_delete=models.PROTECT,
         null=True
     )
+    quantity = models.IntegerField(verbose_name="Количество", default=1)
+    product_size = models.CharField(max_length=4, verbose_name="Размер")
 
     def __str__(self):
         return "cart"
