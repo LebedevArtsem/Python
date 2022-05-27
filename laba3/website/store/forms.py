@@ -38,3 +38,7 @@ class CheckoutForm(forms.ModelForm):
             'phone',
             'email',
         ]
+
+
+class ProductForm(forms.ModelForm):
+    size = forms.CharField(widget=forms.RadioSelect)

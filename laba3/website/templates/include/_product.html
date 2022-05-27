@@ -34,17 +34,10 @@
                 </div>
                 <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                     <div>
-                        {% if request.user.is_authenticated %}
                         <div><a href="{{ item.get_absolute_url }}"><img src="{% static 'images/cart.svg' %}"
-                                                                           class="svg" alt=""></a>
+                                                                        class="svg" alt=""></a>
                             <div>+</div>
                         </div>
-                        {% else %}
-                        <div><a href="{% url 'login' %}"><img src="{% static 'images/cart.svg' %}" class="svg"
-                                                              alt=""></a>
-                            <div>+</div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -12,14 +12,12 @@
             <div class="product_name"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></div>
         </div>
     </div>
-    <div class="product_size product_text"><span>Size: </span></div>
+    <div class="product_size product_text"><span>Size: </span>{{ order.product_size }}</div>
     <div class="product_price product_text"><span>Price: </span>${{ item.price }}</div>
     <div class="product_quantity_container">
         <div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-            <span class="product_text product_num">1</span>
-            <div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
-            <div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
+            <span class="product_text product_num">{{ order.quantity }}</span>
         </div>
     </div>
-    <div class="product_total product_text"><span>Total: </span>$3.99</div>
+    <div class="product_total product_text"><span>Total: </span>${% widthratio order.quantity 1 item.price %}</div>
 </li>

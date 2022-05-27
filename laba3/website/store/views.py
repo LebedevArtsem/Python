@@ -1,12 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, View
 
 from .models import Product, Cart, Category
-from .forms import SignUpForm, SignInForm, CheckoutForm
+from .forms import SignUpForm, SignInForm, CheckoutForm, ProductForm
 from django.contrib.auth import login, logout
 import logging
 from django.core.paginator import Paginator
@@ -83,47 +85,44 @@ async def category(request, category_id):
 
 class ProductView(View):
     template_name = 'store/product.html'
+    form_class = ProductForm
 
     def get(self, request, product_id):
         item = Product.objects.get(pk=product_id)
         sizes = item.size
         return render(request, self.template_name, {'item': item, 'sizes': sizes})
 
-
-async def get_product(request, product_id):
-    item = Product.objects.get(pk=product_id)
-    sizes = item.size
-    return render(request, 'store/product.html', {'item': item, 'sizes': sizes})
-
-
-class CartView(ListView):
-    model = Product
-    template_name = 'store/cart.html'
-    context_object_name = 'products'
-
-    def get_queryset(self):
-        current_user = self.request.user
-        products_cart = (
-            Cart.objects.filter(user_id=current_user.pk).values_list('product', flat=True))
-        return Product.objects.filter(pk__in=products_cart)
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-
-# async def add_to_cart(request, product_id):
-#     logger.info(request)
-#     current_user = request.user
-#     await sync_to_async(Cart.objects.create)(product_id=product_id, user_id=current_user.pk)
-#     return redirect('cart')
-
-
-class AddToCartView(View):
-    def get(self, request, product_id):
+    def post(self, request, product_id):
         current_user = request.user
-        Cart.objects.create(product_id=product_id, user_id=current_user.pk)
+        size = request.POST['product_radio']
+        try:
+            order = Cart.objects.get(Q(product_id=product_id) & Q(product_size=size))
+            order.quantity += 1
+            order.save()
+        except Cart.DoesNotExist:
+            Cart.objects.create(product_id=product_id, user_id=current_user.pk, product_size=size)
+
         return redirect('cart')
+
+
+class CartView(View):
+    template_name = 'store/cart.html'
+
+    @method_decorator(login_required(login_url='login'))
+    def get(self, request):
+        current_user = request.user
+        orders = Cart.objects.filter(user_id=current_user.pk)
+        products_pk = orders.values_list('product', flat=True)
+
+        list = []
+        for i in products_pk:
+            list.append(Product.objects.get(pk=i))
+        print(list)
+
+        orders_all = zip(range(0, orders.count()), list, orders)
+
+        logger.debug(request)
+        return render(request, self.template_name, {'orders': orders_all})
 
 
 class CleanCartView(View):
@@ -139,6 +138,7 @@ class CheckoutView(View):
 
     def get(self, request):
         form = self.form_class()
+        
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):

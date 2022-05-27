@@ -54,53 +54,53 @@
                         </div>
                     </div>
                     <div class="product_price">${{ item.price }}</div>
-                    <div class="product_size">
-                        <div class="product_size_title">Select Size</div>
-                        <ul class="d-flex flex-row align-items-start justify-content-start">
-                            {% if sizes|length == 0 %}
-                            <h3>Sorry, don't have any sizes</h3>
-                            {% else %}
-                            {% for i in sizes %}
-                            <li>
-                                <input type="radio" id="{{ i }}" name="product_radio"
-                                       class="regular_radio">
-                                <label for="{{ i }}">{{ i }}</label>
-                            </li>
-                            {% endfor %}
-                            {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="product_size">
 
-                        </ul>
-                    </div>
-                    <div class="product_text">
-                        <p>{{ item.description }}</p>
-                    </div>
-                    <div class="product_buttons">
-                        <div class="text-right d-flex flex-row align-items-start justify-content-start">
-                            <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
-                                <div>
-                                    <div><img src="{% static 'images/heart_2.svg' %}" class="svg" alt="">
-                                        <div>+</div>
+                            <div class="product_size_title">Select Size</div>
+                            <ul class="d-flex flex-row align-items-start justify-content-start">
+                                {% if sizes|length == 0 %}
+                                <h3>Sorry, don't have any sizes</h3>
+                                {% else %}
+                                {% for i in sizes %}
+                                <li>
+                                    <input type="radio" id="{{ i }}" name="product_radio"
+                                           class="regular_radio" value="{{ i }}" required>
+                                    <label for="{{ i }}">{{ i }}</label>
+                                </li>
+                                {% endfor %}
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                        <div class="product_text">
+                            <p>{{ item.description }}</p>
+                        </div>
+                        <div class="product_buttons">
+                            <div class="text-right d-flex flex-row align-items-start justify-content-start">
+                                <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
+                                    <div>
+                                        <div><img src="{% static 'images/heart_2.svg' %}" class="svg" alt="">
+                                            <div>+</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
-                                <div>
+                                <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                                     <div>
-                                        {% if request.user.is_authenticated %}
-                                        <a href="{{ item.get_add_to_cart_url }}">
-                                            <img src="{% static 'images/cart.svg' %}" class="svg" alt="">
-                                        </a>
-                                        {% else %}
-                                        <a href="{% url 'login' %}">
-                                            <img src="{% static 'images/cart.svg' %}" class="svg" alt="">
-                                        </a>
-                                        {% endif %}
-                                        <div>+</div>
+                                        <div>
+                                            <button type="submit">
+                                                <a href="{{ item.get_absolute_url }}">
+                                                    <img src="{% static 'images/cart.svg' %}" class="svg" alt="">
+                                                </a>
+                                            </button>
+                                            <div>+</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
