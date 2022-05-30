@@ -60,10 +60,10 @@
 
                             <div class="product_size_title">Select Size</div>
                             <ul class="d-flex flex-row align-items-start justify-content-start">
-                                {% if sizes|length == 0 %}
+                                {% if item.size|length == 0 %}
                                 <h3>Sorry, don't have any sizes</h3>
                                 {% else %}
-                                {% for i in sizes %}
+                                {% for i in item.size %}
                                 <li>
                                     <input type="radio" id="{{ i }}" name="product_radio"
                                            class="regular_radio" value="{{ i }}" required>

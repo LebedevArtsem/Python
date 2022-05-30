@@ -114,11 +114,11 @@ class CartView(View):
         orders = Cart.objects.filter(user_id=current_user.pk)
         products_pk = orders.values_list('product', flat=True)
 
-        list = []
+        products = []
         for i in products_pk:
-            list.append(Product.objects.get(pk=i))
+            products.append(Product.objects.get(pk=i))
 
-        orders_all = zip(range(1, orders.count() + 1), list, orders)
+        orders_all = zip(range(1, orders.count() + 1), products, orders)
 
         logger.debug(request)
         return render(request, self.template_name, {'orders': orders_all})
@@ -139,7 +139,6 @@ TOTAL_PRICE = 0
 class CheckoutView(View):
     form_class = CheckoutForm
     template_name = 'store/checkout.html'
-    error = ''
 
     @method_decorator(login_required(login_url='login'))
     def get(self, request):
@@ -156,7 +155,7 @@ class CheckoutView(View):
         for order, product in zip(orders, list):
             TOTAL_PRICE += order.quantity * product.price
 
-        return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE, 'error': self.error})
+        return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -166,6 +165,4 @@ class CheckoutView(View):
         if form.is_valid():
             return redirect('store')
 
-        self.error = 'Invalid form'
-
-        return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE, 'error': self.error})
+        return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE})

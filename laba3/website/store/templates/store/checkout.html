@@ -43,56 +43,8 @@
 
                         <form id="checkout_form" class="checkout_form" method="post">
                             {% csrf_token %}
-                            {% if error == 'Invalid form' %}
-                            <p>{{ error }}</p>
-                            {% endif %}
-                            <div class="row">
-
-                                <div class="col-lg-6">
-                                    <!-- Name -->
-                                    <label for="{{ form.firstname.id_for_label }}">First name</label>
-                                    {{ form.firstname }}
-                                    <div class="invalid-feedback">
-                                        {{ form.firstname.errors }}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <!-- Last Name -->
-                                    <label for="{{ form.lastname.id_for_label }}">Last name</label>
-                                    {{ form.lastname }}
-                                    <div class="invalid-feedback">
-                                        {{ form.lastname.errors }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <!-- Address -->
-                                <label for="{{ form.address.id_for_label }}">Address</label>
-                                {{ form.address }}
-                                <div class="invalid-feedback">
-                                    {{ form.address.errors }}
-                                </div>
-                            </div>
-                            <div>
-                                <!-- Phone no -->
-                                <label for="{{ form.phone.id_for_label }}">Phone</label>
-                                {{ form.phone }}
-                                <div class="invalid-feedback">
-                                    {{ form.phone.errors }}
-                                </div>
-                            </div>
-                            <div>
-                                <!-- Email -->
-                                <label for="{{ form.email.id_for_label }}">Email</label>
-                                {{ form.email }}
-                                <div class="invalid-feedback">
-                                    {{ form.email.errors }}
-                                </div>
-                            </div>
-
-                            {#{{form.as_p}}#}
+                            {{form.as_p}}
                             <button type="submit" class="checkout_button">Confirm</button>
-
                         </form>
                     </div>
                 </div>
