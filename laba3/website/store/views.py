@@ -1,22 +1,20 @@
-import re
-
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core import validators, exceptions
 
-from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, CreateView, View
+from django.views.generic import ListView, CreateView, View
 
 from .models import Product, Cart, Category
 from .forms import SignUpForm, SignInForm, CheckoutForm, ProductForm
 from django.contrib.auth import login, logout
 import logging
 from django.core.paginator import Paginator
-from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async, async_to_sync
+import asyncio
+from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +99,10 @@ class ProductView(View):
         except Cart.DoesNotExist:
             Cart.objects.create(product_id=product_id, user_id=current_user.pk, product_size=size)
 
-        return redirect('cart')
+        category_id = Product.objects.get(pk=product_id)
+        str_to_redirect = f'/store/category/{category_id.category_id}/'
+
+        return redirect(str_to_redirect)
 
 
 class CartView(View):
@@ -140,7 +141,19 @@ class CheckoutView(View):
     form_class = CheckoutForm
     template_name = 'store/checkout.html'
 
-    @method_decorator(login_required(login_url='login'))
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super().as_view(**initkwargs)
+        view._is_coroutine = asyncio.coroutines._is_coroutine
+        return view
+
+    async def send_mail_async(self, subj, msg, emails):
+        send_mail(subj, msg, settings.EMAIL_HOST_USER, emails, fail_silently=False)
+        a_send_mail = sync_to_async(send_mail)
+        await a_send_mail(subj, msg, settings.EMAIL_HOST_USER, emails, fail_silently=False)
+
+    # @method_decorator(login_required(login_url='login'))
+    @sync_to_async
     def get(self, request):
         global TOTAL_PRICE
         TOTAL_PRICE = 0
@@ -157,12 +170,15 @@ class CheckoutView(View):
 
         return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE})
 
-    def post(self, request):
+    async def post(self, request):
         form = self.form_class(request.POST)
         global TOTAL_PRICE
         logger.info(request)
 
         if form.is_valid():
+            message = f'Hello, {request.user.username}, you have made a purchase for {TOTAL_PRICE}.'
+            subject = 'Purchase in Esala Store'
+            asyncio.create_task(self.send_mail_async(subject, message, [form.cleaned_data['email']]))
             return redirect('store')
 
         return render(request, self.template_name, {'form': form, 'total_price': TOTAL_PRICE})

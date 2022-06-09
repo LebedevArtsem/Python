@@ -144,3 +144,11 @@ LOGGING = {
 }
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = 587
+EMAIL_HOST_USER = 'esalastore@gmail.com'
+EMAIL_HOST_PASSWORD = 'bddkuixqlzgzhyna'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'esalastore@gmail.com'

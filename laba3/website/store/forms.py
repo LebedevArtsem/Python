@@ -51,10 +51,10 @@ class CheckoutForm(forms.Form):
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if re.match(r"[\d]{2} [\d]{2} [\d]{2} [\d]{3}", phone):
+        if re.match(r"[\d]{2}[\d]{2}[\d]{2}[\d]{3}", phone):
             return phone
         else:
-            raise forms.ValidationError("Phone should be like this : 29 12 34 567")
+            raise forms.ValidationError("Phone should be like this : 291234567")
 
     def clean_firstname(self):
         firstname = self.cleaned_data['firstname']
